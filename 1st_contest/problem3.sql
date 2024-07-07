@@ -10,6 +10,8 @@ LEFT JOIN
         PORT as p
     ON
         i.PORT_CODE = p.PORT_CODE
+WHERE
+    GROUP_CODE = '120'
 GROUP BY
     i.PORT_CODE
 HAVING
