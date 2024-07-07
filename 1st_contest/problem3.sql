@@ -1,0 +1,21 @@
+SELECT
+    i.PORT_CODE as '港コード',
+    p.PORT_NAME as '港名',
+    SUM(CASE WHEN KIND_CODE = '110' THEN AMT ELSE 0 END) AS '入国者数',
+    SUM(CASE WHEN KIND_CODE = '120' THEN AMT ELSE 0 END) AS '出国者数',
+    SUM(CASE WHEN KIND_CODE = '110' THEN AMT ELSE 0 END) - SUM(CASE WHEN KIND_CODE = '120' THEN AMT ELSE 0 END) AS '差分'
+FROM
+    IMMIGRATION AS i
+LEFT JOIN
+        PORT as p
+    ON
+        i.PORT_CODE = p.PORT_CODE
+GROUP BY
+    i.PORT_CODE
+HAVING
+    差分 > 0
+ORDER BY
+    差分 DESC
+    , 港コード DESC
+    
+;
